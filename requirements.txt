@@ -1,0 +1,11 @@
+gensim
+nnfs
+nltk
+scikit-learn
+umap-learn
+matplotlib 
+wordcloud 
+pandas
+seaborn
+numpy
+plotly
