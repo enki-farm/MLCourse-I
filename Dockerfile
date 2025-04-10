@@ -21,6 +21,8 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 # Clean up
 RUN rm /tmp/requirements.txt
 
+RUN pip install --upgrade jupyterlab ipywidgets
+
 # Expose the default Jupyter Lab port
 EXPOSE 8888
 
