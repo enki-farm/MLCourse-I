@@ -60,3 +60,7 @@ Found a bug? Have an idea to make this course even better? Contributions are alw
 ## 🌈 Final Thoughts
 
 Learning Machine Learning can feel like navigating uncharted territory, but with this course, you'll have a map, a guide, and a community to support you. So grab your favorite beverage ☕, fire up your terminal, and let's make some magic happen! ✨
+
+### ✍️ Author's Note
+
+This README was thoughtfully crafted to guide you through this Machine Learning journey. While the technical parts were supported by a Human, the vision, structure, and welcoming tone were shaped by Copilot to ensure you feel at home while exploring this repository. Enjoy the ride! 🚀
