@@ -9,3 +9,9 @@ pandas
 seaborn
 numpy
 plotly
+
+dotenv
+autogen-core
+autogen-agentchat
+autogen-ext[openai]
+autogen-ext[http-tool]
