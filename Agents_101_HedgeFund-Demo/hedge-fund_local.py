@@ -1,26 +1,31 @@
 import asyncio
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
 from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.conditions import TextMentionTermination
 from autogen_agentchat.teams import RoundRobinGroupChat
 from autogen_agentchat.ui import Console
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 
+from autogen_core.models import ModelInfo
+
 from agents.coinmarketcap_agent import CoinMarketCapAgent
 
 
 # === Model Client Setup ===
 
-API_KEY = os.getenv("OPENAI_API_KEY")
+model_info = {
+    "family": "unknown",
+    "function_calling": True,
+    "json_output": True,
+    "structured_output": True,
+    "vision": False,
+}
 
 # Define a model client. You can use other model client that implements the `ChatCompletionClient` interface.
 model_client = OpenAIChatCompletionClient(
-    model="gpt-4o-mini",
-    api_key=API_KEY,
+    model="llama-3.2-3b-instruct",
+    model_info=ModelInfo(**model_info),
+    base_url="http://localhost:1234/v1/",
+    api_key="YOUR_API_KEY",
 )
 
 # === Agent Setup ===
@@ -41,10 +46,7 @@ bearish_agent = AssistantAgent(
     name="BearishAnalyst",
     model_client=model_client,
     model_client_stream=True,
-    system_message="""
-        You are a skeptical crypto analyst. Your role is to argue against buying the given token. Consider risks, volatility, 
-        weak fundamentals, or market conditions that may harm its future. Answer only as if you were a pirate.
-    """,
+    system_message="You are a skeptical crypto analyst. Your role is to argue against buying the given token. Consider risks, volatility, weak fundamentals, or market conditions that may harm its future.",
 )
 
 # 4. Investment Judge
@@ -70,5 +72,10 @@ team = RoundRobinGroupChat([cmc_agent, bullish_agent, bearish_agent, judge_agent
 
 async def main() -> None:
     await Console(team.run_stream(task="Get a investment recommendation for bitcoin (BTC)"))  # Stream the messages to the console.
+
+    #from agents.coinmarketcap_agent import cnc_meta_tool
+    #from autogen_core import CancellationToken
+    #result = await cnc_meta_tool.run_json({"symbol": "BTC"}, CancellationToken())
+    #print(result)
 
 asyncio.run(main())
